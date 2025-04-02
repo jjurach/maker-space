@@ -1,12 +1,12 @@
 
 stem_length = 60;
-stem_width = 4;
-// pixel = 0.85;f
+stem_width = 3.8;
+// pixel = 0.85;
 pixel = stem_width / 5;
 
-far_pocket_offset = 0.0;
-near_pocket_offset = 23.0;
-pocket_length = 12.0;
+pocket_offset = 0.0;
+pocket_length = 8.0;
+pocket_width = 1.4;
 
 top_pocket = pocket_length / 2.0;
 
@@ -18,26 +18,15 @@ p4 = 4 * pixel;
 
 function addv(dims, variance=0.005) = [dims[0]+variance, dims[1]+variance, dims[2]+variance];
 
-// left pocket
-pocket1 = stem_length - near_pocket_offset;
+difference() {
+  union() {
+    color([0,1,0]) translate([p0,p0,p0]) cube(addv([p2, stem_length, p1]));
+    color([0,0,1]) translate([p0,p0,p1]) cube(addv([p1, stem_length, p1]));
 
-translate([p0, pocket1 - top_pocket, p0])    cube(addv([pixel, top_pocket, 3 * pixel]));
+    color([1,0,0]) translate([p0,p0,p0]) cube(addv([p3, pocket_length, p3]));
+  }
+  translate([p3/2-pocket_width/2,p0-0.1,p3/2-pocket_width/2]) cube(addv([pocket_width, pocket_length/2, pocket_width]));
+}
 
-translate([p1, pocket1 - pocket_length, p0]) cube(addv([pixel, pocket_length, pixel]));
-translate([p1, pocket1 - top_pocket, p2])    cube(addv([pixel, top_pocket, pixel]));
-
-// center
-
-translate([p1,p0,p0]) cube(addv([3*pixel, pocket1, pixel]));
-
-translate([p2,p0,p0]) cube(addv([pixel, stem_length, 3*pixel]));
-
-translate([p3,p0,p0]) cube(addv([pixel, stem_length, pixel]));
-
-// right pocket
-pocket2 = stem_length - far_pocket_offset;
-
-translate([p3, pocket2 - pocket_length,p0]) cube(addv([pixel,pocket_length, pixel]));
-translate([p3, pocket2 - top_pocket, p2])   cube(addv([pixel,top_pocket, pixel]));
-
-translate([p4, pocket2 - top_pocket, p0])   cube(addv([pixel,top_pocket, 3 * pixel]));
+//color([1,1,0]) translate([p2,p0,p0]) cube(addv([p1, pocket_length, p3]));
+//color([0,1,1]) translate([p0,p0,p2]) cube(addv([p2, pocket_length, p1]));
