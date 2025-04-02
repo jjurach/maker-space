@@ -4,11 +4,11 @@ stem_width = 4;
 // pixel = 0.85;f
 pixel = stem_width / 5;
 
-far_pocket_offset = 0;
-near_pocket_offset = 23;
-pocket_length = 4;
+far_pocket_offset = 0.0;
+near_pocket_offset = 23.0;
+pocket_length = 12.0;
 
-top_pocket = 0.50 * pocket_length;
+top_pocket = pocket_length / 2.0;
 
 p0 = 0 * pixel;
 p1 = 1 * pixel;
@@ -28,9 +28,11 @@ translate([p1, pocket1 - top_pocket, p2])    cube(addv([pixel, top_pocket, pixel
 
 // center
 
-translate([p1,p0,p0]) cube(addv([3*pixel, stem_length, pixel]));
+translate([p1,p0,p0]) cube(addv([3*pixel, pocket1, pixel]));
 
 translate([p2,p0,p0]) cube(addv([pixel, stem_length, 3*pixel]));
+
+translate([p3,p0,p0]) cube(addv([pixel, stem_length, pixel]));
 
 // right pocket
 pocket2 = stem_length - far_pocket_offset;
