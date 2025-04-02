@@ -1,2 +1,4 @@
 tmp/
 00_archive/
+*.lck
+*-backups
