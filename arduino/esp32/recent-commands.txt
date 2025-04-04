@@ -1,0 +1,500 @@
+   68  cd WiFiFun/
+   69  ls
+   70  arduino-upload 
+   71  minicom
+   72  cd Blink/
+   73  ls
+   74  arduino-upload 
+   75  history | grep apt | tail
+   76  sudo apt-get install platformio
+   77  apt-cache search platform | grep -i platform.*io
+   78  apt-cache search platform | grep -i platform.*io | ;ess
+   79  apt-cache search platform | grep -i platform.*io | less
+   80  python3 --version
+   81  pip3 install platformio
+   82  which python
+   83  which python3
+   84  sudo ln -s python3 /usr/bin/python
+   85  sudo rm /usr/bin/python
+   86  top
+   87  ps -ef | grep python
+   88  sudo ln -s python3 /usr/bin/python
+   89  sudo apt-get install python3-venv
+   90  pio --help
+   91  pio run upload
+   92  pio run
+   93  cat > 1
+   94  mv 1 /etc/udev/rules.d/99-platformio-udev.rules
+   95  sudo cp 1 /etc/udev/rules.d/99-platformio-udev.rules
+   96  pio run
+   97  ls /dev | grep -i usb
+   98  cat ~/bin/arduino-upload 
+   99  pio run
+  100  cat > 1
+  101  pio device list
+  102  ls /*/*USB*
+  103  sudo mknod /dev/ttyUSB0 c 188 0
+  104  ls -l /dev/tty*
+  105  sudo service udev restart
+  106  ls -l /dev/tty*
+  107  find /dev | grep -i usb
+  108  ls /dev/usb
+  109  find /dev 2>/dev/null | grep -i usb
+  110  pio run --target upload
+  111  pio run --target upload --upload-port /dev/bus/usb/001
+  112  ls -l /dev/bus
+  113  ls -l /dev/bus/usb
+  114  ls -l /dev/bus/usb/001
+  115  find /dev 2>/dev/null | grep -i usb | less
+  116  ls -l /media
+  117  ls -l /media/
+  118  find / 2>/dev/null | grep -i usb | less
+  119  sudo mknod /dev/ttyUSB0 c 188 0
+  120  ls -l /dev/
+  121  curl https://ifconfig.me
+  122  cd
+  123  du
+  124  du -s .??* * | sort -nr | tail
+  125  du -s .??* * | sort -n | tail
+  126  df -k .
+  127  sudo apt-get install freecad
+  128  sudo apt-get update
+  129  sudo apt-get dist-upgrade
+  130  sudo apt-get clean
+  131  sudo apt-get install freecad
+  132  df
+  133  sudo apt-get install freecad
+  134  sudo apt-get clean
+  135  freecad
+  136  sudo apt-get install openscad
+  137  freecad
+  138  openscad 
+  139  exit
+  140  openscad
+  141  bg
+  142  ls
+  143  cd MyFiles
+  144  ls
+  145  cd ..
+  146  ls
+  147  ls /
+  148  ls /c
+  149  ls
+  150  ls -ltr
+  151  ls Models/
+  152  cd Models/
+  153  ls
+  154  cp a_small_cube.scad bracket.scad
+  155  sudo reboot
+  156  cat /etc/*release*
+  157  sudo apt-get update
+  158  sudo apt-get dist-upgrade
+  159  sudo apt autoremove
+  160  arduino
+  161  bg
+  162  ls
+  163  cd Arduino/
+  164  ls
+  165  cd Blink/
+  166  ls
+  167  ls -ltr
+  168  less Blink.ino 
+  169  grep -r LED_BUILTIN
+  170  rpm -qf $(which arduino)
+  171  which arduino
+  172  ls -l /usr/bin/arduino
+  173  ls -l /usr/bin | grep -i serial
+  174  minicom 
+  175  arduino &
+  176  arduino
+  177  bg
+  178  ls
+  179  cd Arduino/
+  180  ls
+  181  cd Esp32/
+  182  ls
+  183  cd Blink/
+  184  ls
+  185  cat Blink.ino 
+  186  ls
+  187  cd ../..
+  188  ls
+  189  less Blink/Blink.ino 
+  190  f
+  191  fg
+  192  arduino &
+  193  sudo apt-get install kicad
+  194  kicad
+  195  bg
+  196  ls
+  197  cd
+  198  cd Models/
+  199  ls
+  200  cd ..
+  201  mkdir MakerSpace
+  202  cd MakerSpace/
+  203  ls
+  204  git config --global core.autocrlf input
+  205  git init
+  206  mkdir kicad
+  207  cd kicad/
+  208  ls
+  209  mkdir sample
+  210  cd
+  211  ls
+  212  cd Muy
+  213  mount
+  214  ls /mnt/external
+  215  ls
+  216  ls Arduino/
+  217  ls
+  218  ls /
+  219  ls /*
+  220  sudo mkdir /Projects
+  221  sudo rmdir /Projects
+  222  mkdir Projects
+  223  ls /mnt/chromeos/
+  224  ls /mnt/chromeos/MyFiles/
+  225  ls /mnt/chromeos/MyFiles/Projects/
+  226  cp /mnt/chromeos/MyFiles/Projects/openscad.tgz MakerSpace/
+  227  cd MakerSpace/
+  228  ls
+  229  cd ..
+  230  mv MakerSpace m
+  231  git clone git@github.com:jjurach/maker-space MakerSpace
+  232  ssh-add ~/.ssh/github-jjurach 
+  233  eval $(ssh-agent)
+  234  ssh-add ~/.ssh/github-jjurach 
+  235  git clone git@github.com:jjurach/maker-space MakerSpace
+  236  mv m/openscad.tgz MakerSpace/
+  237  cd MakerSpace/
+  238  ls
+  239  tar xzf openscad.tgz 
+  240  ls
+  241  cd openscad/
+  242  ls
+  243  ls */*.scad
+  244  cd stem_insert/
+  245  ls
+  246  ls -l
+  247  ls -l > t.sh
+  248  vi t.sh 
+  249  bash t.sh 
+  250  git status
+  251  ls
+  252  rm t.sh 
+  253  ls
+  254  git status .
+  255  cd ..
+  256  ls
+  257  ls */*scad
+  258  cd llama-cast/
+  259  ls
+  260  git add llama-cast.scad 
+  261  cd ..
+  262  cd Enclosure1/
+  263  ls
+  264  git add *.scad
+  265  cd ..
+  266  git status
+  267  ls openscad-tests/
+  268  mkdir tmp
+  269  echo tmp/ >> ../.git/
+  270  cat ../.gitignore
+  271  echo tmp/ >> ../.gitignore
+  272  git status
+  273  cd ..
+  274  ls
+  275  cd openscad/
+  276  ls
+  277  ls openscad-tests/
+  278  mv openscad-tests tmp/
+  279  ls
+  280  git status
+  281  cd ..
+  282  git status
+  283  git add .gitignore 
+  284  git satus
+  285  git status
+  286  mkdir 00_archive
+  287  mv openscad.tgz 00_archive/
+  288  git status
+  289  echo 00_archive/ >> .gitignore 
+  290  git status
+  291  git add .gitignore
+  292  git commit -m 'misc. openscad files. .gitignore' .
+  293  git push
+  294  git status
+  295  openscad
+  296  ls
+  297  cd openscad/
+  298  ls
+  299  cd Enclosure1/
+  300  ls
+  301  cd ..
+  302  ls
+  303  openscad 
+  304  ls
+  305  cd Enclosure1/
+  306  ls
+  307  vi enclosure-1a.scad 
+  308  openscad
+  309  apt-get install vscode
+  310  sudo apt-get install vscode
+  311  sudo apt-get update
+  312  sudo apt-get install -y gnome-keyring
+  313  sudo dpkg -i /mnt/chromeos/MyFiles/Projects/code_1.98.2-1741788907_amd64.deb 
+  314  code 
+  315  cd ..
+  316  ls
+  317  cd ..
+  318  ls
+  319  cd
+  320  ls
+  321  cd Arduino/
+  322  ls
+  323  cd Blink/
+  324  ls
+  325  less Blink.ino 
+  326  cd ..
+  327  ls
+  328  cd Esp32/
+  329  ls
+  330  cd ..
+  331  ls
+  332  cd ..
+  333  cp -a Arduino ~/MakerSpace/arduino
+  334  cd ~/MakerSpace/
+  335  ls
+  336  git status
+  337  cd arduino/
+  338  ls
+  339  cd Esp32/
+  340  ls
+  341  cd ..
+  342  ls
+  343  cd ..
+  344  ls
+  345  cd arduino/
+  346  ls
+  347  mv Blink blink
+  348  ls
+  349  mv Esp32 esp32
+  350  ls
+  351  mv RobotCar robot_car
+  352  ls
+  353  ls low_high_sensor/
+  354  cd esp32/
+  355  ls
+  356  cd IrrigationController/
+  357  ls
+  358  ls 
+  359  ls *
+  360  git add hello-serial/hello-serial.ino 
+  361  ls
+  362  mv hello-serial ..
+  363  ls
+  364  mv irrigation-contoller-1 ..
+  365  cd ..
+  366  rmdir IrrigationController
+  367  ls
+  368  mv irrigation-contoller-1 pump-controller
+  369  ld
+  370  ls
+  371  less notes.txt 
+  372  ls
+  373  cd pump-controller/
+  374  ls
+  375  mv irrigation-contoller-1.ino pump-controller.ino
+  376  git add pump-controller.ino 
+  377  cd ..
+  378  git status
+  379  git add hello-serial/hello-serial.ino 
+  380  git status
+  381  git add IrrigationController/hello-serial/hello-serial.ino
+  382  git status
+  383  ls
+  384  ls Blink/
+  385  less Blink/Blink.ino 
+  386  cp ../blink/Blink.ino Blink/Blink.ino 
+  387  git status
+  388  git add Blink/Blink.ino 
+  389  ls *
+  390  git add WiFiScan/WiFiScan.ino 
+  391  git add WiFiFun/includes.txt 
+  392  git add WiFiFun/Makefile 
+  393  git add WiFiFun/WiFiFun.ino 
+  394  git status
+  395  ls .vscode/
+  396  echo .vscode/ >> ../../.gitignore 
+  397  git status
+  398  ls
+  399  ls -a
+  400  git reset
+  401  git status
+  402  ls
+  403  tar czf .git.tgz .git/
+  404  ls -l .git.tgz 
+  405  ls
+  406  rm -rf .git
+  407  git status .
+  408  ls
+  409  cd ..
+  410  ls -a
+  411  git status
+  412  ls
+  413  cd esp32/
+  414  ls
+  415  git add */*.ino
+  416  git add */Makefile
+  417  git status
+  418  git add WiFiFun/includes.txt
+  419  git status
+  420  mkdir tmp;
+  421  mv .git.tgz tmp/git.tgz
+  422  mv WiFiFun/compile.out tmp/
+  423  git status
+  424  mkdir ../home-assistant
+  425  mv notes.txt ../home-assistant/
+  426  cd ..
+  427  git add home-assistant
+  428  cd esp32/
+  429  ls
+  430  cd ..
+  431  git mv home-assistant ..
+  432  cd esp32/
+  433  git status 
+  434  ls
+  435  git add */*.ino
+  436  git status
+  437  ls lib
+  438  cd ..
+  439  ls
+  440  ls libraries/
+  441  cd ..
+  442  git status
+  443  git add .gitignore 
+  444  git diff openscad/
+  445  git status
+  446  git commit -m 're-format. hide lid. add project details' openscad
+  447  git status
+  448  git add arduino/blink/Blink.ino 
+  449  ls arduino/libraries/
+  450  du arduino/libraries/
+  451  ls
+  452  git status
+  453  cd arduino/
+  454  cd libraries/
+  455  ls
+  456  less readme.txt 
+  457  git status
+  458  du 
+  459  ls WiFiEsp/
+  460  git status
+  461  git add .
+  462  git status
+  463  cd ..
+  464  ls
+  465  git status
+  466  git add low_high_sensor robot_car/[sT]*
+  467  git status
+  468  rm blink/1
+  469  ls robot_car/
+  470  git add robot_car/*
+  471  git status
+  472  cd robot_car/
+  473  ls
+  474  du
+  475  ls
+  476  git status
+  477  git diff
+  478  ls
+  479  tar czvf .git.tgz .git
+  480  ls
+  481  rm -rf .git
+  482  ls
+  483  git add .
+  484  git status
+  485  cd ..
+  486  git status
+  487  cd ..
+  488  git status
+  489  git commit -m 'import arduino projects' .
+  490  git statuys
+  491  git status
+  492  git push
+  493  git pull --rebase
+  494  vi .git
+  495  vi .gitignore 
+  496  git add .gitignore 
+  497  git rebase --continue
+  498  git status
+  499  git push
+  500  git status
+  501  ls
+  502  cd arduino/
+  503  ls
+  504  cd esp32/
+  505  ls
+  506  cd WiFiFun/
+  507  ls
+  508  less Makefile 
+  509  ls
+  510  less includes.txt 
+  511  ls
+  512  less Makefile 
+  513  ls
+  514  make
+  515  cd ..
+  516  ls
+  517  git status
+  518  history | grep -i ardui
+  519  ls
+  520  cd Blink/
+  521  ls
+  522  cd ..
+  523  arduino
+  524  bg
+  525  arduino-cli board list
+  526  arduino-cli core install esp32:esp32
+  527  arduino-cli board listall
+  528  arduino-cli board listall | grep -i wroom
+  529  arduino-cli board listall | head
+  530  ls
+  531  cdf Blink/
+  532  ls
+  533  cd Blink/
+  534  ls
+  535  arduino-cli upload --fqbn esp32:esp32:esp32da
+  536  arduino-cli upload --fqbn esp32:esp32:esp32da Blink.ino 
+  537  arduino-cli help
+  538  arduino-cli compile --fqbn esp32:esp32:esp32da Blink.ino 
+  539  arduino-cli compile --help
+  540  arduino-cli compile --fqbn esp32:esp32:esp32da --log-level trace Blink.ino 
+  541  arduino-cli compile --fqbn esp32:esp32:esp32da --log-level trace --log Blink.ino 
+  542  arduino-cli upload --log-level trace --log 
+  543  arduino-cli upload --fqbn esp32:esp32:esp32da --log-level trace --log 
+  544  arduino-cli upload --fqbn esp32:esp32:esp32da --log-level trace --log --help
+  545  arduino-cli upload --fqbn esp32:esp32:esp32da --log-level trace --log --help | grep port
+  546  arduino-cli upload --fqbn esp32:esp32:esp32da --port /dev/ttyS0 --log-level trace --log --help
+  547  echo arduino-cli upload --fqbn esp32:esp32:esp32da --port /dev/ttyS0 --log-level trace --log
+  548  jobs
+  549  arduino &
+  550  echo arduino-cli upload --fqbn esp32:esp32:esp32da --port /dev/ttyUSB0 --log-level trace --log
+  551  echo arduino-cli upload --fqbn esp32:esp32:esp32da --port /dev/ttyUSB0 --log-level trace --log Blink.ino 
+  552  arduino-cli upload --fqbn esp32:esp32:esp32da --port /dev/ttyUSB0 --log-level trace --log Blink.ino 
+  553  arduino-cli compile --clean Blink.ino 
+  554  arduino-cli compile --fqbn esp32:esp32:esp32da --clean Blink.ino 
+  555  arduino-cli --fqbn esp32:esp32:esp32da clean Blink.ino 
+  556  arduino-cli
+  557  stty -F /dev/ttyUSB0 raw 9600
+  558  cat /dev/ttyUSB0 
+  559  cd ../pump-controller/
+  560  arduino-cli compile --fqbn esp32:esp32:esp32da pump-controller.ino 
+  561  arduino-cli upload --fqbn esp32:esp32:esp32da --port /dev/ttyUSB0 --log-level trace --log
+  562  stty -F /dev/ttyUSB0 raw 9600
+  563  cat /dev/ttyUSB0 
+  564  cd //
+  565  cd -
+  566  cd ..
+  567  history | tail -500 > recent-commands.txt
