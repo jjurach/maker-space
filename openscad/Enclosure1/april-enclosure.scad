@@ -1,65 +1,69 @@
+$fn = 50;
 
-control_length = 67.05;
-control_width = 67.05;
-control_height = 15;
+// electronic components
+control_length = 70.05 + 0.5;
+control_width = 67.05 + 0.5;
+control_height = 28;
 
-power_length = 20;
-back_length = 40;
+power_length = 25;
+back_length = 35;
 
 relay_length = 70.4 + 2;
-relay_width = 17.07;
+relay_width = 17.07 + 0.3;
 relay_height = 16;
-
-control_shim = (relay_length - control_width) / 2;
 
 buck_length = 43.3;
 buck_width = 21.0;
 buck_height = 12;
 
-$fn = 50;
+// 
 
-corner_radius = 4;
-wall_thickness = 4;
-inner_wall_thickness = 1.7;
+corner_radius = 2;
+wall_thickness = 2;
+inner_wall_thickness = 1.5;
+
 post_diameter = 10;
-hole_diameter = 3;
+hole_diameter = 2;
 lid_thickness = 2;
 lid_lip = 2;
-lid_tolerance = .5;
+lid_tolerance = 0.8;
 
-rim_height = 6;
+rim_height = 8;
 lid_offset = 15;
 
 hslot_length = control_length / 6;
-hslot_width = 8;
-hslot_height = 12;
+hslot_width = 10;
+hslot_height = 15;
 hslot_angle = 45;
+
+control_shim = (relay_length - control_width) / 2;
 
 mount_length = hslot_length / 2;
 mount_width = hslot_width / 2;
 mount_height = hslot_height / 2;
 
-shim_height = hslot_height / 4;
-
-port_width = 30;
+port_width = 20;
 port_height = 15;
+rack_width = 8;
 
 jack_offset = 15;
 jack_height = 15;
-jack_diameter = 11.5;
+jack_diameter = 11.5 + 0.5;
 
 switch_offset = 8;
 switch_height = 10;
 switch_width = 12.4;
 switch_length = 18.8;
 
-rack_width = 10;
-
 // outside dimensions for enclosure box
 width = relay_length + 2 * corner_radius;
 length = power_length + 2 * relay_width + 2 * inner_wall_thickness + back_length + 2 * corner_radius;
 // length = control_length + back_length + 2 * corner_radius;
 height = control_height + relay_height + mount_height;
+
+shim_height = hslot_height / 3;
+
+fin_height = height / 5;
 
 // internal boundaries
 int_x0 = -width / 2 + corner_radius;
@@ -69,7 +73,7 @@ int_y1 = length / 2 - corner_radius;
 
 usb_width = 4;
 usb_length = 10;
-usb_height = height - mount_height - usb_width;
+usb_height = relay_height + hslot_height + 2;
 
 module posts(x, y, z, h, r)
 {
@@ -128,7 +132,7 @@ module enclosure()
 
 module fin()
 {
-	cube([ width - corner_radius, inner_wall_thickness, height / 4 ]);
+	cube([ width - corner_radius, inner_wall_thickness, fin_height ]);
 }
 
 module hslot(hlength=hslot_length, hwidth=hslot_width,hheight=hslot_height)
@@ -143,6 +147,14 @@ module hslot(hlength=hslot_length, hwidth=hslot_width,hheight=hslot_height)
 }
 
 module enclosure_internals()
+{
+	difference() {
+		enclosure_internals_add();
+		enclosure_internals_subtract();
+	}
+}
+
+module enclosure_internals_add()
 {
     // bottom fins
 	translate([ int_x0, int_y0 + power_length, 0 ])
@@ -214,27 +226,43 @@ module enclosure_internals()
 	hslot(mount_length, mount_width, 1.5*mount_height);
 }
 
+module enclosure_internals_subtract()
+{
+	posts(x = (int_x1 - 2 ),
+		y = (int_y1 - 2),
+		z = height - 5-0.1,
+		h = 5+0.2,
+		r = hole_diameter / 2);
+}
+
 module enclosure_lid()
 {
+	mirror([0,0,1])
 	difference()
 	{
 		// outside lid
 		hull()
 		{
-			posts(x = (width / 2 - corner_radius + wall_thickness / 2 + lid_tolerance),
-					y = (length / 2 - corner_radius + wall_thickness / 2 + lid_tolerance), z = height + lid_offset,
-					h = lid_thickness + rim_height, r = corner_radius);
+			posts(x = (int_x1 + wall_thickness + lid_tolerance),
+					y = (int_y1 + wall_thickness + lid_tolerance),
+					z = height + lid_offset,
+					h = lid_thickness + rim_height,
+					r = corner_radius);
 		}
 		// inside box within lid
 		hull()
 		{
-			posts(x = (width / 2 - corner_radius - lid_tolerance), y = (length / 2 - corner_radius - lid_tolerance),
-					z = height + lid_offset - 0.1, h = rim_height, r = corner_radius);
+			posts(x = (int_x1 + lid_tolerance),
+					y = (int_y1 + lid_tolerance),
+					z = height + lid_offset - 0.1,
+					h = rim_height,
+					r = corner_radius);
 		}
-		// lid post holes
-		posts(x = (width / 2 - wall_thickness / 2 - post_diameter / 2),
-				y = (length / 2 - wall_thickness / 2 - post_diameter / 2), z = height + lid_offset - 0.1,
-				h = height - wall_thickness + 0.1, r = hole_diameter / 2);
+		posts(x = (int_x1-2 ),
+			y = (int_y1-2),
+			z = height + lid_offset + rim_height - 0.2,
+			h = 5+0.1,
+			r = hole_diameter / 2);
 	}
 }
 
