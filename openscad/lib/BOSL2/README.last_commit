@@ -1,0 +1,9 @@
+$ git show HEAD
+commit 7821a5143c7ab488ff3ff73d0cd0c4b508fb5796 (HEAD -> master, origin/master, origin/HEAD)
+Merge: 46baff14 f7ebb80c
+Author: adrianVmariano <avm4@cornell.edu>
+Date:   Sat Apr 5 09:13:16 2025 -0400
+
+    Merge pull request #1620 from adrianVmariano/master
+
+    path_sweep doc: bit about anchors
