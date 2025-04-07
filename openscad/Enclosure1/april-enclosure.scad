@@ -63,8 +63,8 @@ jack_diameter = 11.5 + 0.5;
 // Power rocker switch
 switch_offset = 8;
 switch_height = 10;
-switch_width = 13.0;
-switch_length = 18.8;
+switch_width = 12.6;
+switch_length = 19.2;
 
 // usb port
 usb_width = 4;
@@ -293,7 +293,7 @@ module port_rack()
 	}
 }
 
-//enclosure();
-//enclosure_internals();
-//enclosure_lid();
+enclosure();
+enclosure_internals();
+enclosure_lid();
 port_rack();
