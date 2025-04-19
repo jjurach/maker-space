@@ -1,6 +1,6 @@
 
 board_width = 20;
-board_depth = 1.45;
+board_depth = 1.50;
 stand_height = 20;
 stand_width = board_width;
 stand_depth = 10;
@@ -8,8 +8,9 @@ stand_depth = 10;
 base_length = 70;
 base_height = 5;
 
-//component_height = 8.6;
-component_height = 10.1;
+// 8.6 green or 10.1 blue
+component_height = 8.6;
+// component_height = 10.1;
 notch_offset = component_height + base_height;
 notch_depth = 5;
 

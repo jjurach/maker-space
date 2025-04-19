@@ -1,11 +1,11 @@
 
 spacing = 2.54;
 numpins = 15;
-pinwidth = 0.5;
+pinwidth = 1.2;
 
-length = numpins * (spacing + 2);
-width = 4 * spacing;
-height = 2 * spacing;
+length = ( numpins + 2) * spacing;
+width = 2 * spacing;
+height = 3 * spacing;
 
 x0 = -width / 2;
 y0 = -length / 2;
@@ -18,7 +18,7 @@ difference()
 	// translate([ 0, 0, 10 ])
 	for (i = [1:1:numpins])
 	{
-		translate([ -pinwidth / 2, y0 + (1 + i) * spacing - pinwidth / 2, spacing ])
-		cube([ pinwidth, pinwidth, spacing + 0.1 ]);
+		translate([ -pinwidth / 2, y0 - pinwidth / 2 + (i + 0.5) * spacing, spacing-0.3 ])
+		cube([ pinwidth, pinwidth, 2*spacing + 0.4 ]);
 	}
 }

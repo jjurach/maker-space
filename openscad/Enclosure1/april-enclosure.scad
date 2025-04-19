@@ -1,14 +1,18 @@
 $fn = 100;
 
 // electronic components
-control_length = 70.05 + 0.5;
-control_width = 67.05 + 0.5;
-control_height = 28;
+control_length = 70.05 + 1.5;
+control_width = 67.05 + 1;
+control_height = 30;
+
+control_hole_diameter = 3.2; // for m2
+control_hole_offset = 1;
+control_hole_depth = 5;
 
 power_length = 25;
 back_length = 35;
 
-relay_length = 70.4 + 2;
+relay_length = 70.4 + 4;
 relay_width = 17.07 + 0.3;
 relay_height = 16;
 
@@ -33,7 +37,7 @@ hslot_height = 15;
 hslot_angle = 45;
 
 control_shim = (relay_length - control_width) / 2;
-shim_height = hslot_height / 3;
+shim_height = hslot_height / 2;
 
 // lid mounts
 mount_length = hslot_length * 3 / 5;
@@ -67,9 +71,9 @@ switch_width = 12.6;
 switch_length = 19.2;
 
 // usb port
-usb_width = 4;
+usb_width = 4.5;
 usb_length = 10;
-usb_height = relay_height + hslot_height + 13;
+usb_height = relay_height + hslot_height + 13.5;
 
 // enclosure details
 corner_radius = 2;
@@ -91,21 +95,21 @@ int_y0 = -length / 2 + corner_radius;
 int_x1 = width / 2 - corner_radius;
 int_y1 = length / 2 - corner_radius;
 
-module posts(x, y, z, h, r)
+module posts(x, y, z, h, r, w=undef, l=undef)
 {
 	translate([ x, y, z ])
 	{
 		cylinder(r = r, h = h);
 	}
-	translate([ -x, y, z ])
+	translate([ (w==undef?-x:x-w), y, z ])
 	{
 		cylinder(r = r, h = h);
 	}
-	translate([ -x, -y, z ])
+	translate([  (w==undef?-x:x-w),(l==undef?-y:y-l), z ])
 	{
 		cylinder(r = r, h = h);
 	}
-	translate([ x, -y, z ])
+	translate([ x, (l==undef?-y:y-l), z ])
 	{
 		cylinder(r = r, h = h);
 	}
@@ -144,6 +148,8 @@ module enclosure()
 		translate([ -usb_length / 2, int_y0 - wall_thickness - 0.1, usb_height ])
 		cube([ usb_length, wall_thickness + 0.2, usb_width + 0.2 ]);
 	}
+
+	enclosure_internals();
 }
 
 module fin()
@@ -175,11 +181,11 @@ module enclosure_internals()
 module enclosure_internals_add()
 {
 	// bottom fins
-	translate([ int_x0, int_y0 + power_length, 0 ])
-	fin();
+	//translate([ int_x0, int_y0 + power_length, 0 ])
+	//fin();
 
-	translate([ int_x0, int_y0 + power_length + inner_wall_thickness + relay_width, 0 ])
-	fin();
+	//translate([ int_x0, int_y0 + power_length + inner_wall_thickness + relay_width, 0 ])
+	//fin();
 
 	translate([ int_x0, int_y0 + power_length + 2 * inner_wall_thickness + 2 * relay_width, 0 ])
 	fin();
@@ -244,8 +250,22 @@ module enclosure_internals_add()
 
 module enclosure_internals_subtract()
 {
-	posts(x = (int_x1 - 2), y = (int_y1 - 2), z = height - lid_mount_depth - 0.1, h = lid_mount_depth + 0.2,
-	      r = lid_mount_diameter / 2);
+	posts(x = (int_x1 - wall_thickness*1.3),
+		y = (int_y1 - wall_thickness*1.5),
+		z = height - lid_mount_depth - 0.1,
+		h = lid_mount_depth + 0.2,
+		r = lid_mount_diameter / 2);
+
+    control_hole_spacing_x = 60.5;
+    control_hole_spacing_y = 60.5;
+
+	posts(x = (int_x0 + control_width-1),
+		y = (int_y0 + control_length-5),
+		w = control_hole_spacing_x,
+		l = control_hole_spacing_y,
+		z = relay_height + hslot_height - control_hole_depth - 0.1,
+		h = control_hole_depth + 0.2,
+		r = control_hole_diameter / 2);
 
 	translate([ -rack_hole_spacing / 2, int_y1 - rack_width / 2, height - port_height + 0.1 ])
 	mirror([ 0, 0, 1 ]) cylinder(h = rack_insert_depth + 0.2, r = rack_insert_diameter / 2);
@@ -271,8 +291,12 @@ module enclosure_lid()
 			posts(x = (int_x1 + lid_tolerance), y = (int_y1 + lid_tolerance), z = height + lid_offset - 0.1,
 			      h = rim_height, r = corner_radius);
 		}
-		posts(x = (int_x1 - 2), y = (int_y1 - 2), z = height + lid_offset + rim_height - 0.2, h = 5 + 0.1,
+		posts(x = (int_x1 - wall_thickness*1.3), y = (int_y1 - wall_thickness*1.5), z = height + lid_offset + rim_height - 0.2, h = 5 + 0.1,
 		      r = lid_hole_diameter / 2);
+
+		// notch for usb
+		translate([-usb_length, int_y1-0.5, height + lid_offset - 0.1])
+		cube([2*usb_length, 4*wall_thickness, usb_width]);
 	}
 }
 
@@ -294,6 +318,5 @@ module port_rack()
 }
 
 enclosure();
-enclosure_internals();
 enclosure_lid();
-port_rack();
+//port_rack();
