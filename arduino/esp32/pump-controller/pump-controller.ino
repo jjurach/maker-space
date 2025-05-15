@@ -27,11 +27,9 @@ int last_kill2 = 0;
 int pump_state1 = 0;
 int pump_state2 = 0;
 
-int read_pin(int pin, int last_val, const char *desc)
-{
+int read_pin(int pin, int last_val, const char *desc) {
   int val = !digitalRead(pin);
-  if (val != last_val)
-  {
+  if (val != last_val) {
     Serial.print(desc);
     Serial.print(" change detected: ");
     Serial.println(val);
@@ -45,22 +43,16 @@ int read_pin(int pin, int last_val, const char *desc)
 int blink_interval = 5000;
 int blink_step = 0;
 time_t blink_t = 0;
-void handle_blink()
-{
+void handle_blink() {
   time_t t = millis();
-  if (t - blink_t > blink_interval)
-  {
+  if (t - blink_t > blink_interval) {
     blink_t = t;
     blink_step = 0;
-    digitalWrite(led, HIGH); // turn the LED on (HIGH is the voltage level)
-  }
-  else if (blink_step == 0 && t - blink_t > blink_interval / 10)
-  {
+    digitalWrite(led, HIGH);  // turn the LED on (HIGH is the voltage level)
+  } else if (blink_step == 0 && t - blink_t > blink_interval / 10) {
     blink_step = 1;
     digitalWrite(led, LOW);
-  }
-  else if (blink_step == 1 && t - blink_t > blink_interval / 5)
-  {
+  } else if (blink_step == 1 && t - blink_t > blink_interval / 5) {
     blink_step = 2;
     digitalWrite(led, led_state);
   }
@@ -69,11 +61,9 @@ void handle_blink()
 // Serial display
 //
 int display_t = 0;
-void handle_display()
-{
+void handle_display() {
   int t = millis();
-  if (t - display_t > 4000)
-  {
+  if (t - display_t > 4000) {
     display_t = t;
     Serial.print("1:[");
     Serial.print(last_low1);
@@ -92,8 +82,7 @@ void handle_display()
 
 // Read sensors
 //
-void read_sensors()
-{
+void read_sensors() {
   last_low1 = read_pin(sensor_low1, last_low1, "low1");
   last_high1 = read_pin(sensor_high1, last_high1, "high1");
   last_kill1 = read_pin(sensor_kill1, last_kill1, "kill1");
@@ -101,42 +90,35 @@ void read_sensors()
   last_high2 = read_pin(sensor_high2, last_high2, "high2");
   last_kill2 = read_pin(sensor_kill2, last_kill2, "kill2");
 
-  if (last_kill1)
-  {
+  if (last_kill1) {
     pump_state1 = 0;
-  }
-  else if (!last_high1 && !last_low1)
-  {
+  } else if (!last_high1 && !last_low1) {
     pump_state1 = 1;
-  }
-  else if (pump_state1 == 1 && last_high1)
-  {
+  } else if (pump_state1 == 1 && last_high1) {
     pump_state1 = 0;
   }
 
-  if (last_kill2)
-  {
+  if (last_kill2) {
     pump_state2 = 0;
-  }
-  else if (!last_high2 && !last_low2)
-  {
+  } else if (!last_high2 && !last_low2) {
     pump_state2 = 1;
-  }
-  else if (pump_state2 && last_high2)
-  {
+  } else if (pump_state2 && last_high2) {
     pump_state2 = 0;
   }
 
+  int prev_led_state = led_state;
   led_state = pump_state1 && pump_state2;
+  if (led && (prev_led_state != led_state)) {
+    digitalWrite(led, led_state);
+  }
 
   digitalWrite(relay_ctrl1, pump_state1);
   digitalWrite(relay_ctrl2, pump_state2);
 }
 
 // the setup function runs once when you press reset or power the board
-void setup()
-{
-  Serial.begin(9600); // open the serial port at 9600 bps:
+void setup() {
+  Serial.begin(9600);  // open the serial port at 9600 bps:
 
   if (led)
     pinMode(led, OUTPUT);
@@ -151,8 +133,7 @@ void setup()
 }
 
 // the loop function runs over and over again forever
-void loop()
-{
+void loop() {
   read_sensors();
   handle_blink();
   handle_display();
