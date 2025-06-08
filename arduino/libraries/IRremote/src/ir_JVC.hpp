@@ -76,12 +76,11 @@
 #define JVC_ONE_SPACE         (3 * JVC_UNIT)  // 1578 - The length of a Bit:Space for 1's
 #define JVC_ZERO_SPACE        JVC_UNIT        // The length of a Bit:Space for 0's
 
-#define JVC_REPEAT_DISTANCE      (uint16_t)(45 * JVC_UNIT)  // 23625 - Commands are repeated with a distance of 23 ms for as long as the key on the remote control is held down.
-#define JVC_REPEAT_PERIOD     65000 // assume around 40 ms for a JVC frame
+#define JVC_REPEAT_DISTANCE   (uint16_t)(45 * JVC_UNIT)  // 23625 - Commands are repeated with a distance of 23 ms for as long as the key on the remote control is held down.
+#define JVC_REPEAT_PERIOD     65000 // assume around 40 ms for a JVC frame. JVC IR Remotes: RM-SA911U, RM-SX463U have 45 ms period
 
 struct PulseDistanceWidthProtocolConstants JVCProtocolConstants = { JVC, JVC_KHZ, JVC_HEADER_MARK, JVC_HEADER_SPACE, JVC_BIT_MARK,
-JVC_ONE_SPACE, JVC_BIT_MARK, JVC_ZERO_SPACE, PROTOCOL_IS_LSB_FIRST, (JVC_REPEAT_PERIOD
-        / MICROS_IN_ONE_MILLI), NULL };
+JVC_ONE_SPACE, JVC_BIT_MARK, JVC_ZERO_SPACE, PROTOCOL_IS_LSB_FIRST, (JVC_REPEAT_PERIOD / MICROS_IN_ONE_MILLI), NULL };
 
 /************************************
  * Start of send and decode functions
@@ -119,26 +118,26 @@ void IRsend::sendJVC(uint8_t aAddress, uint8_t aCommand, int_fast8_t aNumberOfRe
 
 bool IRrecv::decodeJVC() {
 
-//    uint_fast8_t tRawlen = decodedIRData.rawDataPtr->rawlen; // Using a local variable does not improve code size
+//    uint_fast8_t tRawlen = decodedIRData.rawlen; // Using a local variable does not improve code size
 
     // Check we have the right amount of data (36 or 34). The +4 is for initial gap, start bit mark and space + stop bit mark.
     // +4 is for first frame, +2 is for repeats
-    if (decodedIRData.rawDataPtr->rawlen != ((2 * JVC_BITS) + 2) && decodedIRData.rawDataPtr->rawlen != ((2 * JVC_BITS) + 4)) {
+    if (decodedIRData.rawlen != ((2 * JVC_BITS) + 2) && decodedIRData.rawlen != ((2 * JVC_BITS) + 4)) {
         IR_DEBUG_PRINT(F("JVC: "));
         IR_DEBUG_PRINT(F("Data length="));
-        IR_DEBUG_PRINT(decodedIRData.rawDataPtr->rawlen);
+        IR_DEBUG_PRINT(decodedIRData.rawlen);
         IR_DEBUG_PRINTLN(F(" is not 34 or 36"));
         return false;
     }
 
-    if (decodedIRData.rawDataPtr->rawlen == ((2 * JVC_BITS) + 2)) {
+    if (decodedIRData.rawlen == ((2 * JVC_BITS) + 2)) {
         /*
          * Check for repeat
          * Check leading space and first and last mark length
          */
-        if (decodedIRData.rawDataPtr->rawbuf[0] < ((JVC_REPEAT_DISTANCE + (JVC_REPEAT_DISTANCE / 4) / MICROS_PER_TICK))
+        if (decodedIRData.initialGapTicks < ((JVC_REPEAT_DISTANCE + (JVC_REPEAT_DISTANCE / 4) / MICROS_PER_TICK))
                 && matchMark(decodedIRData.rawDataPtr->rawbuf[1], JVC_BIT_MARK)
-                && matchMark(decodedIRData.rawDataPtr->rawbuf[decodedIRData.rawDataPtr->rawlen - 1], JVC_BIT_MARK)) {
+                && matchMark(decodedIRData.rawDataPtr->rawbuf[decodedIRData.rawlen - 1], JVC_BIT_MARK)) {
             /*
              * We have a repeat here, so do not check for start bit
              */
@@ -208,7 +207,7 @@ bool IRrecv::decodeJVCMSB(decode_results *aResults) {
     }
     offset++;
 
-    if (!decodePulseDistanceWidthData(JVC_BITS, offset, JVC_BIT_MARK, 0, JVC_ONE_SPACE, JVC_ZERO_SPACE, PROTOCOL_IS_MSB_FIRST)) {
+    if (!decodePulseDistanceWidthData(JVC_BITS, offset, JVC_BIT_MARK, JVC_ONE_SPACE, 0, PROTOCOL_IS_MSB_FIRST)) {
         return false;
     }
 
@@ -232,6 +231,7 @@ bool IRrecv::decodeJVCMSB(decode_results *aResults) {
 /**
  * With Send sendJVCMSB() you can send your old 32 bit codes.
  * To convert one into the other, you must reverse the byte positions and then reverse all bit positions of each byte.
+ * Use bitreverse32Bit().
  * Or write it as one binary string and reverse/mirror it.
  * Example:
  * 0xCB340102 byte reverse -> 02 01 34 CB bit reverse-> 40 80 2C D3.
@@ -250,8 +250,7 @@ void IRsend::sendJVCMSB(unsigned long data, int nbits, bool repeat) {
     }
 
     // Old version with MSB first Data
-    sendPulseDistanceWidthData(JVC_BIT_MARK, JVC_ONE_SPACE, JVC_BIT_MARK, JVC_ZERO_SPACE, data, nbits,
-            PROTOCOL_IS_MSB_FIRST);
+    sendPulseDistanceWidthData(JVC_BIT_MARK, JVC_ONE_SPACE, JVC_BIT_MARK, JVC_ZERO_SPACE, data, nbits, PROTOCOL_IS_MSB_FIRST);
 }
 
 /** @}*/

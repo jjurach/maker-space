@@ -65,17 +65,7 @@
 #ifndef _IR_REMOTE_HPP
 #define _IR_REMOTE_HPP
 
-#define VERSION_IRREMOTE "4.1.0"
-#define VERSION_IRREMOTE_MAJOR 4
-#define VERSION_IRREMOTE_MINOR 1
-#define VERSION_IRREMOTE_PATCH 0
-
-/*
- * Macro to convert 3 version parts into an integer
- * To be used in preprocessor comparisons, such as #if VERSION_IRREMOTE_HEX >= VERSION_HEX_VALUE(3, 7, 0)
- */
-#define VERSION_HEX_VALUE(major, minor, patch) ((major << 16) | (minor << 8) | (patch))
-#define VERSION_IRREMOTE_HEX  VERSION_HEX_VALUE(VERSION_IRREMOTE_MAJOR, VERSION_IRREMOTE_MINOR, VERSION_IRREMOTE_PATCH)
+#include "IRVersion.h"
 
 // activate it for all cores that does not use the -flto flag, if you get false error messages regarding begin() during compilation.
 //#define SUPPRESS_ERROR_MESSAGE_FOR_BEGIN
@@ -96,7 +86,7 @@
 
 #if !defined(NO_DECODER) // for sending raw only
 #  if (!(defined(DECODE_DENON) || defined(DECODE_JVC) || defined(DECODE_KASEIKYO) \
-|| defined(DECODE_PANASONIC) || defined(DECODE_LG) || defined(DECODE_NEC) || defined(DECODE_SAMSUNG) \
+|| defined(DECODE_PANASONIC) || defined(DECODE_LG) || defined(DECODE_NEC) || defined(DECODE_ONKYO) || defined(DECODE_SAMSUNG) \
 || defined(DECODE_SONY) || defined(DECODE_RC5) || defined(DECODE_RC6) \
 || defined(DECODE_DISTANCE_WIDTH) || defined(DECODE_HASH) || defined(DECODE_BOSEWAVE) \
 || defined(DECODE_LEGO_PF) || defined(DECODE_MAGIQUEST) || defined(DECODE_FAST) || defined(DECODE_WHYNTER)))
@@ -117,7 +107,7 @@
 #    if !defined(EXCLUDE_EXOTIC_PROTOCOLS) // saves around 2000 bytes program memory
 #define DECODE_BOSEWAVE
 #define DECODE_LEGO_PF
-#define DECODE_MAGIQUEST // It modifies the RAW_BUFFER_LENGTH from 100 to 112
+#define DECODE_MAGIQUEST
 #define DECODE_WHYNTER
 #define DECODE_FAST
 #    endif
@@ -167,19 +157,20 @@
  * Keep in mind, that this is the delay between the end of the received command and the start of decoding.
  */
 #if !defined(RECORD_GAP_MICROS)
-// To change this value, you simply can add a line #define "RECORD_GAP_MICROS <My_new_value>" in your ino file before the line "#include <IRremote.hpp>"
-#define RECORD_GAP_MICROS   5000 // FREDRICH28AC / LG2 header space is 9700, NEC header space is 4500
+// To change this value, you simply can add a line #define "RECORD_GAP_MICROS <My_new_value>" in your *.ino file before the line "#include <IRremote.hpp>"
+// Maximum value for RECORD_GAP_MICROS, which fit into 8 bit buffer, using 50 us as tick, is 12750
+#define RECORD_GAP_MICROS   8000 // RECS80 (https://www.mikrocontroller.net/articles/IRMP#RECS80) 1 bit space is 7500µs , NEC header space is 4500
 #endif
 /**
  * Threshold for warnings at printIRResult*() to report about changing the RECORD_GAP_MICROS value to a higher value.
  */
 #if !defined(RECORD_GAP_MICROS_WARNING_THRESHOLD)
-// To change this value, you simply can add a line #define "RECORD_GAP_MICROS_WARNING_THRESHOLD <My_new_value>" in your ino file before the line "#include <IRremote.hpp>"
+// To change this value, you simply can add a line #define "RECORD_GAP_MICROS_WARNING_THRESHOLD <My_new_value>" in your *.ino file before the line "#include <IRremote.hpp>"
 #define RECORD_GAP_MICROS_WARNING_THRESHOLD   15000
 #endif
 
 /** Minimum gap between IR transmissions, in MICROS_PER_TICK */
-#define RECORD_GAP_TICKS    (RECORD_GAP_MICROS / MICROS_PER_TICK) // 100
+#define RECORD_GAP_TICKS    (RECORD_GAP_MICROS / MICROS_PER_TICK)
 
 /*
  * Activate this line if your receiver has an external output driver transistor / "inverted" output
@@ -202,7 +193,7 @@
 #if (defined(ESP32) || defined(ARDUINO_ARCH_RP2040) || defined(PARTICLE)) || defined(ARDUINO_ARCH_MBED)
 #  if !defined(SEND_PWM_BY_TIMER)
 #define SEND_PWM_BY_TIMER       // the best and default method for ESP32 etc.
-#warning INFO: For ESP32, RP2040, mbed and particle boards SEND_PWM_BY_TIMER is enabled by default. If this is not intended, deactivate the line in IRremote.hpp over this warning message in file IRremote.hpp.
+#warning INFO: For ESP32, RP2040, mbed and particle boards SEND_PWM_BY_TIMER is enabled by default, since we have the resources and timing is more exact than the software generated one. If this is not intended, deactivate the line in IRremote.hpp over this warning message in file IRremote.hpp.
 #  endif
 #else
 #  if defined(SEND_PWM_BY_TIMER)
@@ -281,6 +272,8 @@
 #warning INFO: No definition for LED_BUILTIN found -> default LED feedback is disabled.
 #    endif
 #include "IRFeedbackLED.hpp"
+#  else
+void disableLEDFeedback() {}; // dummy function for examples
 #  endif
 
 #include "LongUnion.h" // used in most decoders
