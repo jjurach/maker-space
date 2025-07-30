@@ -1,14 +1,14 @@
 
 fwd_width = 21.0;
 bwd_width = 24.4;
-bwd_skew = 3;
+bwd_skew = 1;
 fwd_skew = 0;
-slot_length = 142.2;
+slot_length = 140;
 slot_depth = 34;
-fwd_side_skew = 0.5;
-bwd_side_skew = 0.5;
-fwd_top_skew = 1.0;
-bwd_top_skew = 8.0;
+fwd_side_skew = 1.2;
+bwd_side_skew = 1.2;
+fwd_top_skew = 2.5;
+bwd_top_skew = 9.5;
 
 module base()
 {
@@ -43,6 +43,8 @@ difference()
 
 	translate([ fwd_width / 5, slot_length / 20, -slot_depth ])
 	cube([ fwd_width * 3 / 5, slot_length * 9 / 10, 4 * slot_depth ]);
+
+	//translate([-500, -500, -1]) cube([1000,1000, slot_depth-2]);
 };
 
 module triangle_prism()
